@@ -1,0 +1,101 @@
+﻿    <script src="./admin/forge/jquery.min.js"></script><!-- jquery.js -->
+    <script src="./admin/forge/jquery-ui.min.js"></script> <!-- http://jqueryui.com/ -->
+    <link href="./admin/forge/style.css" rel="stylesheet" />
+    <script src="./admin/forge/three.min.js"></script>
+    <script src="./admin/forge/viewer3D.min.js"></script>
+    <style>
+        div#viewer { width: calc(100%); height: 650px; cursor: pointer; padding: 0px; margin-bottom: 20px; position: relative; overflow: hidden;
+            background-color: #eee; border: 2px dashed #aaa; border-radius: 10px; }
+    </style>
+
+    <script>
+        var docs =
+            [{"path":"./admin/forge/Resource/____/3D/3D.svf","name":"3D"}]
+        ;
+
+        var oViewer =null ;
+        $(document).ready (function () {
+            var options ={ 'docid': docs [0].path, env: 'Local' } ;
+            oViewer =new Autodesk.Viewing.Private.GuiViewer3D ($("#viewer") [0], {}) ; // With toolbar
+            Autodesk.Viewing.Initializer (options, function () {
+            oViewer.initialize () ;
+                oViewer.addEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function (event) {
+                    //oViewer.removeEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, arguments.callee) ;
+                    oViewer.fitToView (true) ;
+                    setTimeout (function () { oViewer.autocam.setHomeViewFrom (oViewer.navigation.getCamera ()) ; }, 1000) ;
+                }) ;
+            oViewer.loadModel (options.docid) ;
+      }) ;
+        }) ;
+
+        function test_func1(){
+            oViewer.hide(15325);
+            oViewer.impl.visibilityManager.setNodeOff(15325, true );
+            oViewer.hide(15326);
+            oViewer.impl.visibilityManager.setNodeOff(15326, true );
+            oViewer.clearSelection();
+        } 
+
+        function test_func(){
+            var childCount = 0;
+            var instanceTree = oViewer.model.getInstanceTree();
+            instanceTree.enumNodeChildren(11286, function(child) {
+            
+                console.log(instanceTree.getNodeName(child));
+                console.log(child);
+            
+            childCount++;
+        }); 
+            console.log(childCount);
+           //alert(childCount);
+
+            oViewer.impl.visibilityManager.setNodeOff(2825, true);
+            oViewer.impl.visibilityManager.setNodeOff(2841, true);
+            oViewer.impl.visibilityManager.setNodeOff(2865, true);
+            oViewer.impl.visibilityManager.setNodeOff(2884, true);
+            oViewer.impl.visibilityManager.setNodeOff(2967, true);
+            oViewer.impl.visibilityManager.setNodeOff(3214, true);
+            oViewer.impl.visibilityManager.setNodeOff(3228, true);
+            oViewer.impl.visibilityManager.setNodeOff(3663, true);
+            oViewer.impl.visibilityManager.setNodeOff(4274, true);
+            oViewer.impl.visibilityManager.setNodeOff(4728, true);
+            oViewer.impl.visibilityManager.setNodeOff(4764, true);
+            oViewer.impl.visibilityManager.setNodeOff(11924, true);
+            oViewer.impl.visibilityManager.setNodeOff(11286, true);
+            oViewer.impl.visibilityManager.setNodeOff(11287, false);
+            oViewer.impl.visibilityManager.setNodeOff(6339, true);
+            //oViewer.hide(15325);
+            //oViewer.impl.visibilityManager.setNodeOff(15325, true );
+            //oViewer.hide(15326);
+            oViewer.impl.visibilityManager.setNodeOff(15326, true );
+            //oViewer.impl.visibilityManager.show(15326,oViewer.model);
+            var red = new THREE.Vector4(1, 0, 0, 1);
+            oViewer.setThemingColor(15202, red, oViewer.model);
+            //var _camera = oViewer.navigation.getCamera();
+            //console.log(_camera.position);
+            //console.log(_camera.target);
+            //console.log(_camera.dirty);
+            var uniqueDbIds = [11034];
+            oViewer.select(uniqueDbIds);
+            //oViewer.fitToView(uniqueDbIds);
+            oViewer.setViewCube("top");
+            //oViewer.clearSelection();
+        }
+
+
+    </script>
+<div class="wrapper-md" ng-controller="SMViewController">
+  <div class="">
+    <div class="panel-body">
+            <div id="viewer"></div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading font-bold">
+      Form elements
+    </div>
+    <div class="panel-body">
+      <button class="btn btn-success" onclick="test_func()">Form in a modal</button>
+    </div>
+  </div>
+</div>
