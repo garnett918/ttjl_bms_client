@@ -95,12 +95,26 @@ app
                       }]
                   }
               })
+              .state('app.spacemanage.menu', {
+                  ncyBreadcrumb: {
+                    parent:'app.dashboard',
+                    label: '空间管理',
+                  }
+              })
               .state('app.spacemanage.view', {
                   url: '/view',
                   templateUrl: 'admin/spacemanage/view.html',
                   ncyBreadcrumb: {
-                    parent:'app.dashboard',
-                    label: '空间管理',
+                    parent:'app.spacemanage.menu',
+                    label: '空间区域管理',
+                  }
+              })
+              .state('app.spacemanage.loopmanage', {
+                  url: '/loopmanage',
+                  templateUrl: 'admin/spacemanage/loopmanage.html',
+                  ncyBreadcrumb: {
+                    parent:'app.spacemanage.menu',
+                    label: '回路管理',
                   }
               })
 		}

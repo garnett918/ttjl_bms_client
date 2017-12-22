@@ -1,6 +1,9 @@
-﻿    <script src="./admin/forge/jquery.min.js"></script><!-- jquery.js -->
+﻿    <!-- External libraries -->
+    <script src="./admin/forge/jquery.min.js"></script><!-- jquery.js -->
     <script src="./admin/forge/jquery-ui.min.js"></script> <!-- http://jqueryui.com/ -->
-    <link href="./admin/forge/style.css" rel="stylesheet" />
+
+    <!-- Autodesk Forge Viewer -->
+    <link href="./admin/forge/style.min.css" rel="stylesheet" />
     <script src="./admin/forge/three.min.js"></script>
     <script src="./admin/forge/viewer3D.min.js"></script>
     <style>
@@ -39,7 +42,7 @@
         function test_func(){
             var childCount = 0;
             var instanceTree = oViewer.model.getInstanceTree();
-            instanceTree.enumNodeChildren(11286, function(child) {
+            instanceTree.enumNodeChildren(1, function(child) {
             
                 console.log(instanceTree.getNodeName(child));
                 console.log(child);
@@ -49,40 +52,40 @@
             console.log(childCount);
            //alert(childCount);
 
-            oViewer.impl.visibilityManager.setNodeOff(2825, true);
-            oViewer.impl.visibilityManager.setNodeOff(2841, true);
-            oViewer.impl.visibilityManager.setNodeOff(2865, true);
-            oViewer.impl.visibilityManager.setNodeOff(2884, true);
-            oViewer.impl.visibilityManager.setNodeOff(2967, true);
-            oViewer.impl.visibilityManager.setNodeOff(3214, true);
-            oViewer.impl.visibilityManager.setNodeOff(3228, true);
-            oViewer.impl.visibilityManager.setNodeOff(3663, true);
-            oViewer.impl.visibilityManager.setNodeOff(4274, true);
-            oViewer.impl.visibilityManager.setNodeOff(4728, true);
-            oViewer.impl.visibilityManager.setNodeOff(4764, true);
-            oViewer.impl.visibilityManager.setNodeOff(11924, true);
-            oViewer.impl.visibilityManager.setNodeOff(11286, true);
-            oViewer.impl.visibilityManager.setNodeOff(11287, false);
-            oViewer.impl.visibilityManager.setNodeOff(6339, true);
+            oViewer.impl.visibilityManager.setNodeOff(2778, true);
+            oViewer.impl.visibilityManager.setNodeOff(2794, true);
+            oViewer.impl.visibilityManager.setNodeOff(2818, true);
+            oViewer.impl.visibilityManager.setNodeOff(2837, true);
+            oViewer.impl.visibilityManager.setNodeOff(2916, true);
+            oViewer.impl.visibilityManager.setNodeOff(3160, true);
+            oViewer.impl.visibilityManager.setNodeOff(3174, true);
+            oViewer.impl.visibilityManager.setNodeOff(4093, true);
+            oViewer.impl.visibilityManager.setNodeOff(4541, true);
+            oViewer.impl.visibilityManager.setNodeOff(4577, true);
+            oViewer.impl.visibilityManager.setNodeOff(6115, true);
+            oViewer.impl.visibilityManager.setNodeOff(11527, true);
+            oViewer.impl.visibilityManager.setNodeOff(10913, true);
+            oViewer.impl.visibilityManager.setNodeOff(15649, false);
+            oViewer.impl.visibilityManager.setNodeOff(10876, true);
+            oViewer.impl.visibilityManager.setNodeOff(11557, true);
             //oViewer.hide(15325);
             //oViewer.impl.visibilityManager.setNodeOff(15325, true );
             //oViewer.hide(15326);
-            oViewer.impl.visibilityManager.setNodeOff(15326, true );
+            oViewer.impl.visibilityManager.setNodeOff(14872, true );
             //oViewer.impl.visibilityManager.show(15326,oViewer.model);
             var red = new THREE.Vector4(1, 0, 0, 1);
-            oViewer.setThemingColor(15202, red, oViewer.model);
+            oViewer.setThemingColor(16835, red, oViewer.model);
             //var _camera = oViewer.navigation.getCamera();
             //console.log(_camera.position);
             //console.log(_camera.target);
             //console.log(_camera.dirty);
-            var uniqueDbIds = [11034];
+            var uniqueDbIds = [10688,10689];
             oViewer.select(uniqueDbIds);
             //oViewer.fitToView(uniqueDbIds);
             oViewer.setViewCube("top");
+            //setTimeout("oViewer.clearThemingColors()",5000);
             //oViewer.clearSelection();
         }
-
-
     </script>
 <div class="wrapper-md" ng-controller="SMViewController">
   <div class="">

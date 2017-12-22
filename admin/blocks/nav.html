@@ -3,9 +3,10 @@
   <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
     <span translate="导航">导航</span>
   </li>  
+  <!-- 
   <li ui-sref-active="active">
     <a ui-sref="app.news.list">
-      <i class="glyphicon glyphicon-book icon text-info-dker"></i>
+      <i class="glyphicon glyphicon-qrcode icon text-info-dker"></i>
       <span class="font-bold">新闻管理</span>
     </a>
   </li>
@@ -15,6 +16,126 @@
       <span class="font-bold">空间管理</span>
     </a>
   </li>
+  -->
+  <li>
+    <a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-globe icon text-primary-dker"></i>
+      <span class="font-bold" translate="">空间管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="">空间管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.spacemanage.view">
+          <span>空间区域管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.spacemanage.loopmanage">
+          <span>回路管理</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li>
+    <a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-usd icon text-primary-dker"></i>
+      <span class="font-bold" translate="">资产管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="">资产管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>固定资产管理</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li>
+    <a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-facetime-video icon text-primary-dker"></i>
+      <span class="font-bold" translate="">运维管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="">运维管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>设备档案</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>设备日常维护</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>设备应急报修</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+
+  <li>
+    <a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-eye-open icon text-primary-dker"></i>
+      <span class="font-bold" translate="">智能监控</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="">智能监控</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>设备监控</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>环境监测</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.news.list">
+          <span>能耗监测</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
+
   <li>
     <a href class="auto">      
       <span class="pull-right text-muted">
@@ -22,22 +143,17 @@
         <i class="fa fa-fw fa-angle-down text-active"></i>
       </span>
       <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
-      <span class="font-bold" translate="aside.nav.DASHBOARD">Dashboard</span>
+      <span class="font-bold" translate="">运营分析</span>
     </a>
     <ul class="nav nav-sub dk">
       <li class="nav-sub-header">
         <a href>
-          <span translate="aside.nav.DASHBOARD">Dashboard</span>
+          <span translate="">运营分析</span>
         </a>
       </li>
       <li ui-sref-active="active">
         <a ui-sref="app.news.list">
-          <span>Dashboard v1</span>
-        </a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.news.list">
-          <span>Dashboard v2</span>
+          <span>统计图表</span>
         </a>
       </li>
     </ul>

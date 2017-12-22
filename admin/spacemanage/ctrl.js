@@ -64,3 +64,8 @@ app.controller('SMViewController', function($scope, $resource,$stateParams,$moda
     //根据url参数（分页、搜索关键字）查询数据
     $scope.query($stateParams.page,$stateParams.search);
 });
+
+
+app.controller('SMLoopManageController', function($scope, $resource,$stateParams,$modal,$state) {
+
+});
