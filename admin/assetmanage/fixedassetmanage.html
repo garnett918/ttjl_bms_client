@@ -1,0 +1,177 @@
+    <!-- External libraries -->
+    <script src="./admin/forge/jquery.min.js"></script><!-- jquery.js -->
+    <script src="./admin/forge/jquery-ui.min.js"></script> <!-- http://jqueryui.com/ -->
+
+    <!-- Autodesk Forge Viewer -->
+    <link href="./admin/forge/style.min.css" rel="stylesheet" />
+    <script src="./admin/forge/three.min.js"></script>
+    <script src="./admin/forge/viewer3D.min.js"></script>
+    <style>
+        div#viewer { width: calc(100%); height: 650px; cursor: pointer; padding: 0px; margin-bottom: 20px; position: relative; overflow: hidden;
+            background-color: #eee; border: 2px dashed #aaa; border-radius: 10px; }
+    </style>
+
+    <script>
+        var docs =
+            [{"path":"./admin/forge/Resource/____/3D/3D.svf","name":"3D"}]
+        ;
+
+        var oViewer =null ;
+        $(document).ready (function () {
+            var options ={ 'docid': docs [0].path, env: 'Local' } ;
+            oViewer =new Autodesk.Viewing.Private.GuiViewer3D ($("#viewer") [0], {}) ; // With toolbar
+            Autodesk.Viewing.Initializer (options, function () {
+            oViewer.initialize () ;
+                oViewer.addEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function (event) {
+                    //oViewer.removeEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, arguments.callee) ;
+                    oViewer.fitToView (true) ;
+                    setTimeout (function () { oViewer.autocam.setHomeViewFrom (oViewer.navigation.getCamera ()) ; }, 1000) ;
+                }) ;
+            oViewer.loadModel (options.docid) ;
+      }) ;
+        }) ;
+
+        function test_func1(){
+            oViewer.hide(15325);
+            oViewer.impl.visibilityManager.setNodeOff(15325, true );
+            oViewer.hide(15326);
+            oViewer.impl.visibilityManager.setNodeOff(15326, true );
+            oViewer.clearSelection();
+        } 
+
+        function test_func(){
+            var childCount = 0;
+            var instanceTree = oViewer.model.getInstanceTree();
+            instanceTree.enumNodeChildren(1, function(child) {
+            
+                console.log(instanceTree.getNodeName(child));
+                console.log(child);
+            
+            childCount++;
+        }); 
+            console.log(childCount);
+           //alert(childCount);
+
+            oViewer.impl.visibilityManager.setNodeOff(2778, true);
+            oViewer.impl.visibilityManager.setNodeOff(2794, true);
+            oViewer.impl.visibilityManager.setNodeOff(2818, true);
+            oViewer.impl.visibilityManager.setNodeOff(2837, true);
+            oViewer.impl.visibilityManager.setNodeOff(2916, true);
+            oViewer.impl.visibilityManager.setNodeOff(3160, true);
+            oViewer.impl.visibilityManager.setNodeOff(3174, true);
+            oViewer.impl.visibilityManager.setNodeOff(4093, true);
+            oViewer.impl.visibilityManager.setNodeOff(4541, true);
+            oViewer.impl.visibilityManager.setNodeOff(4577, true);
+            oViewer.impl.visibilityManager.setNodeOff(6115, true);
+            oViewer.impl.visibilityManager.setNodeOff(11527, true);
+            oViewer.impl.visibilityManager.setNodeOff(10913, true);
+            oViewer.impl.visibilityManager.setNodeOff(15649, false);
+            oViewer.impl.visibilityManager.setNodeOff(10876, true);
+            oViewer.impl.visibilityManager.setNodeOff(11557, true);
+            oViewer.impl.visibilityManager.setNodeOff(12109, true);
+            //oViewer.hide(15325);
+            //oViewer.impl.visibilityManager.setNodeOff(15325, true );
+            //oViewer.hide(15326);
+            oViewer.impl.visibilityManager.setNodeOff(14872, true );
+            //oViewer.impl.visibilityManager.show(15326,oViewer.model);
+            var red = new THREE.Vector4(1, 0, 0, 1);
+            oViewer.setThemingColor(16835, red, oViewer.model);
+            //var _camera = oViewer.navigation.getCamera();
+            //console.log(_camera.position);
+            //console.log(_camera.target);
+            //console.log(_camera.dirty);
+            var uniqueDbIds = [10688,10689];
+            oViewer.select(uniqueDbIds);
+            //oViewer.fitToView(uniqueDbIds);
+            oViewer.setViewCube("top");
+            //setTimeout("oViewer.clearThemingColors()",5000);
+            //oViewer.clearSelection();
+        }
+    </script>
+
+  <div class="col-sm-7">
+    <div class="panel-body">
+            <div id="viewer"></div>
+    </div>
+  </div>
+  <div class="col-sm-5">
+
+
+
+
+        <div class="wrapper-md" ng-controller="AMFixedAssetManageController">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+            <ul class="nav nav-pills pull-right">
+                  </ul>
+              固定资产
+            </div>
+            <div class="row wrapper">
+              <div class="col-sm-5 m-b-xs">
+                <select class="input-sm form-control w-sm inline v-middle" ng-model="operate" ng-init="operate=0">
+                  <option value="0">---</option>
+                  <option value="1">删除所选记录</option>
+                </select>
+                <button class="btn btn-sm btn-default" ng-click="exec()">执行</button>                
+              </div>
+              <div class="col-sm-4">
+              </div>
+              <div class="col-sm-3">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" placeholder="Search" ng-model="search_context">
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-default" ng-click="search()" type="button">Go!</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive" ng-if="data.total_count>0">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th style="width:20px;">
+                      <label class="i-checks m-b-none">
+                        <input type="checkbox" ng-click="selectAll()"><i></i>
+                      </label>
+                    </th>
+                    <th>标题</th>
+                    <th>创建时间</th>
+                    <th style="width:30px;"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="data in data.results">
+                    <td><label class="i-checks m-b-none"><input type="checkbox" ng-model="data.selected"><i></i></label></td>
+                    <td>{{data.element_id}}</td>
+                    <td>{{data.name}}</td>
+                    <td>
+                      <a ui-sref="app.news.detail({id:data.id})" class="active"><i class="fa fa-edit"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-8 text-left">
+                  <small class="text-muted inline m-t-sm m-b-sm">{{data.total_count}}条记录</small>
+                </div>
+                <div ng-if="data.page_count>1" class="col-sm-4 text-right text-center-xs">                
+                  <ul class="pagination pagination-sm m-t-none m-b-none">
+                    <li ng-class="{disabled:!data.previous}"><a ui-sref="app.assetmanage.fixedassetmanage({page:data.page_index-1,search:search_context})"><i class="fa fa-chevron-left"></i></a></li>
+                    <li ng-repeat="page in data.pages" ng-class="{active:page==data.page_index}"><a ui-sref="app.assetmanage.fixedassetmanage({page:page,search:search_context})">{{page}}</a></li>
+                    <li ng-class="{disabled:!data.next}"><a ui-sref="app.assetmanage.fixedassetmanage({page:data.page_index+1,search:search_context})"><i class="fa fa-chevron-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+
+
+
+
+
+
+
+  </div>

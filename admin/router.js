@@ -109,6 +109,31 @@ app
                     label: '空间区域管理',
                   }
               })
+              .state('app.assetmanage', {
+                  abstract: true,
+                  url: '/assetmanage',
+                  template: '<div ui-view class="fade-in"></div>',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                        function( $ocLazyLoad ){
+                          return $ocLazyLoad.load('admin/assetmanage/ctrl.js');
+                      }]
+                  }
+              })
+              .state('app.assetmanage.menu', {
+                  ncyBreadcrumb: {
+                    parent:'app.dashboard',
+                    label: '资产管理',
+                  }
+              })
+              .state('app.assetmanage.fixedassetmanage', {
+                  url: '/list?page&search',
+                  templateUrl: 'admin/assetmanage/fixedassetmanage.html',
+                  ncyBreadcrumb: {
+                    parent:'app.assetmanage.menu',
+                    label: '固定资产管理',
+                  }
+              })
               .state('app.spacemanage.loopmanage', {
                   url: '/loopmanage',
                   templateUrl: 'admin/spacemanage/loopmanage.html',
@@ -117,6 +142,8 @@ app
                     label: '回路管理',
                   }
               })
+
+
 		}
   );
 
