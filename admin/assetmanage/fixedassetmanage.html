@@ -40,6 +40,7 @@
         } 
 
         function test_func(){
+        	var dbid111 = document.getElementById('dbidhidden').value;
             var childCount = 0;
             var instanceTree = oViewer.model.getInstanceTree();
             instanceTree.enumNodeChildren(1, function(child) {
@@ -80,13 +81,38 @@
             //console.log(_camera.position);
             //console.log(_camera.target);
             //console.log(_camera.dirty);
-            var uniqueDbIds = [10688,10689];
+            var uniqueDbIds = new Array();
+            uniqueDbIds. push(parseInt(dbid111));
             oViewer.select(uniqueDbIds);
-            //oViewer.fitToView(uniqueDbIds);
+            oViewer.fitToView(uniqueDbIds);
             oViewer.setViewCube("top");
             //setTimeout("oViewer.clearThemingColors()",5000);
             //oViewer.clearSelection();
         }
+
+         function test_func2(){
+         	var dbid111 = document.getElementById('dbidhidden').value;
+            oViewer.getProperties(parseInt(dbid111),function(objProp){
+ 
+                 var proplist='';
+			     if(objProp){
+			             console.log(objProp);
+
+			             //遍历每个属性
+			             for(var index in objProp.properties){
+			                 var Prop = objProp.properties[index];
+							 proplist = proplist+Prop.displayName+'###'+Prop.displayValue+',';
+			                 console.log('name: ' + Prop.displayName + '    value:    ' +Prop.displayValue);
+			             }
+
+			        }
+			     document.getElementById("prophidden").value=proplist;
+			     document.getElementById("propselect").click();
+			     
+			     //console.log(proplist);
+
+			});
+        } 
     </script>
 
   <div class="col-sm-7">
@@ -108,19 +134,16 @@
             </div>
             <div class="row wrapper">
               <div class="col-sm-5 m-b-xs">
-                <select class="input-sm form-control w-sm inline v-middle" ng-model="operate" ng-init="operate=0">
-                  <option value="0">---</option>
-                  <option value="1">删除所选记录</option>
-                </select>
-                <button class="btn btn-sm btn-default" ng-click="exec()">执行</button>                
+             
               </div>
               <div class="col-sm-4">
               </div>
               <div class="col-sm-3">
                 <div class="input-group">
                   <input type="text" class="input-sm form-control" placeholder="Search" ng-model="search_context">
+                  <input id ="dbidhidden" type="text" ng-model="dbid_hidden" hidden="true">
                   <span class="input-group-btn">
-                    <button class="btn btn-sm btn-default" ng-click="search()" type="button">Go!</button>
+                    <button class="btn btn-sm btn-default" ng-click="search({search:search_context})" type="button">查询</button>
                   </span>
                 </div>
               </div>
@@ -129,23 +152,15 @@
               <table class="table table-striped b-t b-light">
                 <thead>
                   <tr>
-                    <th style="width:20px;">
-                      <label class="i-checks m-b-none">
-                        <input type="checkbox" ng-click="selectAll()"><i></i>
-                      </label>
-                    </th>
-                    <th>标题</th>
-                    <th>创建时间</th>
-                    <th style="width:30px;"></th>
+                    <th class="text-center">固定资产名称</th>
+                    <th class="text-center" style="width:60px;">显示</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="data in data.results">
-                    <td><label class="i-checks m-b-none"><input type="checkbox" ng-model="data.selected"><i></i></label></td>
-                    <td>{{data.element_id}}</td>
                     <td>{{data.name}}</td>
                     <td>
-                      <a ui-sref="app.news.detail({id:data.id})" class="active"><i class="fa fa-edit"></i></a>
+                      <a ng-click="setdbid({dbid:data.openratio})" class="active text-center"><i class="icon-eye center-block"></i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -158,15 +173,80 @@
                 </div>
                 <div ng-if="data.page_count>1" class="col-sm-4 text-right text-center-xs">                
                   <ul class="pagination pagination-sm m-t-none m-b-none">
-                    <li ng-class="{disabled:!data.previous}"><a ui-sref="app.assetmanage.fixedassetmanage({page:data.page_index-1,search:search_context})"><i class="fa fa-chevron-left"></i></a></li>
-                    <li ng-repeat="page in data.pages" ng-class="{active:page==data.page_index}"><a ui-sref="app.assetmanage.fixedassetmanage({page:page,search:search_context})">{{page}}</a></li>
-                    <li ng-class="{disabled:!data.next}"><a ui-sref="app.assetmanage.fixedassetmanage({page:data.page_index+1,search:search_context})"><i class="fa fa-chevron-right"></i></a></li>
+                    <li ng-class="{disabled:!data.previous}"><a ng-click="paging({page:data.page_index-1,search:search_context})"><i class="fa fa-chevron-left"></i></a></li>
+                    <li ng-repeat="page in data.pages" ng-class="{active:page==data.page_index}"><a ng-click="paging({page:page,search:search_context})">{{page}}</a></li>
+                    <li ng-class="{disabled:!data.next}"><a ng-click="paging({page:data.page_index+1,search:search_context})"><i class="fa fa-chevron-right"></i></a></li>
                   </ul>
                 </div>
               </div>
             </footer>
           </div>
+
+        <div  ng-controller="AMFAMPropertiesController">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+            <ul class="nav nav-pills pull-right">
+                  </ul>
+              固定资产
+            </div>
+            <div class="row wrapper"  hidden="true">
+              <div class="col-sm-5 m-b-xs">
+             
+              </div>
+              <div class="col-sm-4">
+              </div>
+              <div class="col-sm-3">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" placeholder="Search" ng-model="search_context">
+                  <input id ="prophidden" type="text" ng-model="prop_hidden" hidden="true">
+                  <span class="input-group-btn">
+                    <button id = 'propselect' class="btn btn-sm btn-default" ng-click="search({search:search_context})" type="button">查询</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive" ng-if="data.total_count>0">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-center">名称</th>
+                    <th class="text-center">值</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="data in data.results">
+                    <td>{{data.name}}</td>
+                    <td>{{data.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-8 text-left">
+                  <small class="text-muted inline m-t-sm m-b-sm">{{data.total_count}}条记录</small>
+                </div>
+                <div ng-if="data.page_count>1" class="col-sm-4 text-right text-center-xs">                
+                  <ul class="pagination pagination-sm m-t-none m-b-none">
+                    <li ng-class="{disabled:!data.previous}"><a ng-click="paging({page:data.page_index-1,search:search_context})"><i class="fa fa-chevron-left"></i></a></li>
+                    <li ng-repeat="page in data.pages" ng-class="{active:page==data.page_index}"><a ng-click="paging({page:page,search:search_context})">{{page}}</a></li>
+                    <li ng-class="{disabled:!data.next}"><a ng-click="paging({page:data.page_index+1,search:search_context})"><i class="fa fa-chevron-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </footer>
+          </div>
+
+    <div class="panel-body" hidden="true">
+      <button id="forgectrl" class="btn btn-success" onclick="test_func()">Form in a modal</button>
+    </div>
+
+     <div class="panel-body" hidden="true">
+      <button id="propset"  class="btn btn-success" onclick="test_func2()">Form in a modal</button>
+    </div>
+
         </div>
+
 
 
 
