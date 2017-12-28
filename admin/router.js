@@ -109,6 +109,14 @@ app
                     label: '空间区域管理',
                   }
               })
+              .state('app.spacemanage.loopmanage', {
+                  url: '/loopmanage',
+                  templateUrl: 'admin/spacemanage/loopmanage.html',
+                  ncyBreadcrumb: {
+                    parent:'app.spacemanage.menu',
+                    label: '回路管理',
+                  }
+              })
               .state('app.assetmanage', {
                   abstract: true,
                   url: '/assetmanage',
@@ -134,15 +142,115 @@ app
                     label: '固定资产管理',
                   }
               })
-              .state('app.spacemanage.loopmanage', {
-                  url: '/loopmanage',
-                  templateUrl: 'admin/spacemanage/loopmanage.html',
+              .state('app.operationmanage', {
+                  abstract: true,
+                  url: '/operationmanage',
+                  template: '<div ui-view class="fade-in"></div>',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                        function( $ocLazyLoad ){
+                          return $ocLazyLoad.load('admin/operationmanage/ctrl.js');
+                      }]
+                  }
+              })
+              .state('app.operationmanage.menu', {
                   ncyBreadcrumb: {
-                    parent:'app.spacemanage.menu',
-                    label: '回路管理',
+                    parent:'app.dashboard',
+                    label: '运维管理',
+                  }
+              })
+              .state('app.operationmanage.devicefile', {
+                  url: '/dflist?page&search',
+                  templateUrl: 'admin/operationmanage/devicefile.html',
+                  ncyBreadcrumb: {
+                    parent:'app.operationmanage.menu',
+                    label: '设备档案',
+                  }
+              })
+              .state('app.operationmanage.dailymaintenance', {
+                  url: '/dmlist?page&search',
+                  templateUrl: 'admin/operationmanage/dailymaintenance.html',
+                  ncyBreadcrumb: {
+                    parent:'app.operationmanage.menu',
+                    label: '设备日常维护',
+                  }
+              })
+              .state('app.operationmanage.emergencymaintenance', {
+                  url: '/emlist?page&search',
+                  templateUrl: 'admin/operationmanage/emergencymaintenance.html',
+                  ncyBreadcrumb: {
+                    parent:'app.operationmanage.menu',
+                    label: '设备应急报修',
+                  }
+              })
+              .state('app.intelligentmonitor', {
+                  abstract: true,
+                  url: '/intelligentmonitor',
+                  template: '<div ui-view class="fade-in"></div>',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                        function( $ocLazyLoad ){
+                          return $ocLazyLoad.load('admin/intelligentmonitor/ctrl.js');
+                      }]
+                  }
+              })
+              .state('app.intelligentmonitor.menu', {
+                  ncyBreadcrumb: {
+                    parent:'app.dashboard',
+                    label: '智能监控',
+                  }
+              })
+              .state('app.intelligentmonitor.devicemonitor', {
+                  url: '/dmlist?page&search',
+                  templateUrl: 'admin/intelligentmonitor/devicemonitor.html',
+                  ncyBreadcrumb: {
+                    parent:'app.intelligentmonitor.menu',
+                    label: '设备监控',
+                  }
+              })
+              .state('app.intelligentmonitor.environmentalmonitor', {
+                  url: '/emlist?page&search',
+                  templateUrl: 'admin/intelligentmonitor/environmentalmonitor.html',
+                  ncyBreadcrumb: {
+                    parent:'app.intelligentmonitor.menu',
+                    label: '环境监测',
+                  }
+              })
+              .state('app.intelligentmonitor.energyefficiencymonitor', {
+                  url: '/eemlist?page&search',
+                  templateUrl: 'admin/intelligentmonitor/energyefficiencymonitor.html',
+                  ncyBreadcrumb: {
+                    parent:'app.intelligentmonitor.menu',
+                    label: '能耗监测',
                   }
               })
 
+
+              .state('app.operationalanalysis', {
+                  abstract: true,
+                  url: '/operationalanalysis',
+                  template: '<div ui-view class="fade-in"></div>',
+                  resolve: {
+                      deps: ['$ocLazyLoad',
+                        function( $ocLazyLoad ){
+                          return $ocLazyLoad.load('admin/operationalanalysis/ctrl.js');
+                      }]
+                  }
+              })
+              .state('app.operationalanalysis.menu', {
+                  ncyBreadcrumb: {
+                    parent:'app.dashboard',
+                    label: '运营分析',
+                  }
+              })
+              .state('app.operationalanalysis.statisticalreports', {
+                  url: '/dmlist?page&search',
+                  templateUrl: 'admin/operationalanalysis/statisticalreports.html',
+                  ncyBreadcrumb: {
+                    parent:'app.operationalanalysis.menu',
+                    label: '统计图表',
+                  }
+              })
 
 		}
   );
