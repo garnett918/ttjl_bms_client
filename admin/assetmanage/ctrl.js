@@ -13,7 +13,7 @@ app.controller('AMFixedAssetManageController', function($scope, $resource,$state
             //扩展分页数据，显示页签，最终效果为  < 1 2 3 4 5 >
             data.page_index = page;
             data.pages = [];    //页签表
-            var N = 5;          //每次显示5个页签
+            var N = 4;          //每次显示5个页签
             var s = Math.floor(page/N)*N;
             if(s==page)s-=N;
             s += 1;
@@ -48,6 +48,8 @@ app.controller('AMFixedAssetManageController', function($scope, $resource,$state
         angular.element("#dbidhidden").val(obj.dbid);
         angular.element("#forgectrl").click();
         angular.element("#propset").click();
+        //var ui =angular.element("#propdiv");
+        //ui.style.display="true";
     }
     //全选
     var selected = false;
@@ -88,7 +90,7 @@ app.controller('AMFAMPropertiesController', function($scope, $resource,$statePar
                 page_count++;
             }
 
-            var data = {
+            var data1 = {
                 total_count:total_count,
                 page_count:page_count,
                 next:page<page_count,
@@ -96,15 +98,15 @@ app.controller('AMFAMPropertiesController', function($scope, $resource,$statePar
                 results:[],
             }
 
-            data.page_index = page;
-            data.pages = [];    //页签表
+            data1.page_index = page;
+            data1.pages = [];    //页签表
             var N = 4;          //每次显示5个页签
             var s = Math.floor(page/N)*N;
             if(s==page)s-=N;
             s += 1;
-            var e = Math.min(data.page_count,s+N-1)
+            var e = Math.min(data1.page_count,s+N-1)
             for(var i=s;i<=e;i++)
-                data.pages.push(i)
+                data1.pages.push(i)
 
             for(var i=offset;i<(offset+limit);i++)
             {
@@ -116,7 +118,7 @@ app.controller('AMFAMPropertiesController', function($scope, $resource,$statePar
                     var propitemarr=propitem.split('###'); 
                     //var propstr = '{value:'+propitemarr[0]+',name:'+propitemarr[1]+'}';
                     var propstr = {value:propitemarr[1],name:propitemarr[0]};
-                    data.results.push(propstr); 
+                    data1.results.push(propstr); 
                 }
             }
             
@@ -137,7 +139,7 @@ app.controller('AMFAMPropertiesController', function($scope, $resource,$statePar
             //     }
             //     ];
 
-            $scope.data = data;
+            $scope.data1 = data1;
         }
 
 

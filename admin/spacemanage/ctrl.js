@@ -3,7 +3,7 @@
 app.controller('SMViewController', function($scope, $resource,$stateParams,$modal,$state) {
     //查询
     $scope.query = function(page,filter){
-        var $com = $resource($scope.app.host + "/news/?page=:page&search=:filter",{page:'@page',filter:'@filter'});
+        var $com = $resource($scope.app.host + "/spaceregion/?page=:page&search=:filter",{page:'@page',filter:'@filter'});
         if(!page){
             page=1;
         }else{
@@ -25,41 +25,18 @@ app.controller('SMViewController', function($scope, $resource,$stateParams,$moda
         });
     }
     //搜索跳转
-    $scope.search = function(){
-        $state.go('app.news.list',{search:$scope.search_context});
+    $scope.search = function(obj){
+        $scope.query(1,obj.search);
     }
-    //全选
-    var selected = false;
-    $scope.selectAll = function(){
-        selected = !selected;
-        angular.forEach($scope.data.results,function(item){
-            item.selected = selected;
-        });
+    //分页跳转
+    $scope.paging = function(obj){
+        $scope.query(obj.page,obj.search);
     }
-    //自定义操作处理，其中1为删除所选记录
-    $scope.exec = function(){
-        if($scope.operate=="1"){
-            var ids = [];
-            angular.forEach($scope.data.results,function(item){
-                if(item.selected){
-                    ids.push(item.id);
-                }
-            });
-            if(ids.length>0){
-                //弹出删除确认
-                var modalInstance = $modal.open({
-                    templateUrl: 'admin/confirm.html',
-                    controller: 'ConfirmController',
-                    size:'sm',
-                });
-                modalInstance.result.then(function () {
-                      var $com = $resource($scope.app.host + "/news/deletes/?");
-                      $com.delete({'ids':ids.join(',')},function(){
-                          $state.go('app.news.list');
-                      });
-                });
-            }
-        }
+    //分页跳转
+    $scope.setdbid = function(obj){
+        angular.element("#dbidhidden").val(obj.dbid);
+        angular.element("#forgectrl").click();
+        //angular.element("#propset").click();
     }
     //根据url参数（分页、搜索关键字）查询数据
     $scope.query($stateParams.page,$stateParams.search);

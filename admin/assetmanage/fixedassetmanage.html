@@ -75,8 +75,8 @@
             //oViewer.hide(15326);
             oViewer.impl.visibilityManager.setNodeOff(14872, true );
             //oViewer.impl.visibilityManager.show(15326,oViewer.model);
-            var red = new THREE.Vector4(1, 0, 0, 1);
-            oViewer.setThemingColor(16835, red, oViewer.model);
+            //var red = new THREE.Vector4(1, 0, 0, 1);
+            //oViewer.setThemingColor(16835, red, oViewer.model);
             //var _camera = oViewer.navigation.getCamera();
             //console.log(_camera.position);
             //console.log(_camera.target);
@@ -85,7 +85,7 @@
             uniqueDbIds. push(parseInt(dbid111));
             oViewer.select(uniqueDbIds);
             oViewer.fitToView(uniqueDbIds);
-            oViewer.setViewCube("top");
+            //oViewer.setViewCube("top");
             //setTimeout("oViewer.clearThemingColors()",5000);
             //oViewer.clearSelection();
         }
@@ -108,7 +108,8 @@
 			        }
 			     document.getElementById("prophidden").value=proplist;
 			     document.getElementById("propselect").click();
-			     
+           var ui =document.getElementById("propdiv");
+           ui.style.display="";
 			     //console.log(proplist);
 
 			});
@@ -158,9 +159,9 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="data in data.results">
-                    <td>{{data.name}}</td>
+                    <td>{{data.faname}}</td>
                     <td>
-                      <a ng-click="setdbid({dbid:data.openratio})" class="active text-center"><i class="icon-eye center-block"></i></a>
+                      <a ng-click="setdbid({dbid:data.dbid})" class="active text-center"><i class="icon-eye center-block"></i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -182,12 +183,12 @@
             </footer>
           </div>
 
-        <div  ng-controller="AMFAMPropertiesController">
+        <div id="propdiv" ng-controller="AMFAMPropertiesController" style="display:none">
           <div class="panel panel-default">
             <div class="panel-heading">
             <ul class="nav nav-pills pull-right">
                   </ul>
-              固定资产
+              固定资产属性
             </div>
             <div class="row wrapper"  hidden="true">
               <div class="col-sm-5 m-b-xs">
