@@ -13,7 +13,7 @@ angular.module('app')
       // config
       $scope.app = {
 		host: "http://127.0.0.1:8000",
-        name: 'Angulr',
+        name: 'TTJL BMS',
         version: '1.3.3',
         // for chart colors
         color: {
