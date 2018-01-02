@@ -1,3 +1,158 @@
-<div class="wrapper-md" ng-controller="SMLoopManageController">
+    <!-- External libraries -->
+    <script src="./admin/forge/jquery.min.js"></script><!-- jquery.js -->
+    <script src="./admin/forge/jquery-ui.min.js"></script> <!-- http://jqueryui.com/ -->
 
-</div>
+    <!-- Autodesk Forge Viewer -->
+    <link href="./admin/forge/style.min.css" rel="stylesheet" />
+    <script src="./admin/forge/three.min.js"></script>
+    <script src="./admin/forge/viewer3D.min.js"></script>
+    <style>
+        div#viewer { width: calc(100%); height: 650px; cursor: pointer; padding: 0px; margin-bottom: 20px; position: relative; overflow: hidden;
+            background-color: #eee; border: 2px dashed #aaa; border-radius: 10px; }
+    </style>
+
+    <script>
+        var docs =
+            [{"path":"./admin/forge/Resource/____/3D/3D.svf","name":"3D"}]
+        ;
+
+        var oViewer =null ;
+        $(document).ready (function () {
+            var options ={ 'docid': docs [0].path, env: 'Local' } ;
+            oViewer =new Autodesk.Viewing.Private.GuiViewer3D ($("#viewer") [0], {}) ; // With toolbar
+            Autodesk.Viewing.Initializer (options, function () {
+            oViewer.initialize () ;
+                oViewer.addEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function (event) {
+                    oViewer.fitToView (true) ;
+                    setTimeout (function () { oViewer.autocam.setHomeViewFrom (oViewer.navigation.getCamera ()) ; }, 1000) ;
+                }) ;
+            oViewer.loadModel (options.docid) ;
+      }) ;
+        }) ;
+
+        function test_func1(){
+            oViewer.hide(15325);
+            oViewer.impl.visibilityManager.setNodeOff(15325, true );
+            oViewer.hide(15326);
+            oViewer.impl.visibilityManager.setNodeOff(15326, true );
+            oViewer.clearSelection();
+        } 
+
+        function digui(child1){
+            var instanceTree = oViewer.model.getInstanceTree();
+            instanceTree.enumNodeChildren(child1, function(child) {
+            
+                digui(child);
+                var red = new THREE.Vector4(1, 0, 0, 1);
+		        oViewer.setThemingColor(child, red, oViewer.model);
+                
+            }); 
+        } 
+
+        function test_func(){
+            var dbid111 = document.getElementById('dbidhidden').value;
+            if(dbid111 !== null || dbid111 !== undefined || dbid111 !== '')
+		    {
+				uniqueDbIds =[];
+				oViewer.clearThemingColors();
+				var dbidarr=dbid111.split(','); 
+				for(var i=0;i<dbidarr.length;i++){
+					var dbid1 = parseInt(dbidarr[i]);
+					uniqueDbIds. push(dbid1);
+					digui(dbid1);
+				}
+	            oViewer.hide(1);
+	            oViewer.select(uniqueDbIds);
+		    }
+            oViewer.fitToView(uniqueDbIds);
+        }
+    </script>
+
+  <div class="col-sm-7">
+    <div class="panel-body">
+            <div id="viewer"></div>
+    </div>
+  </div>
+  <div class="col-sm-5">
+        <div class="wrapper-md" ng-controller="SMLoopManageController">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+            <ul class="nav nav-pills pull-right">
+                  </ul>
+              回路管理
+            </div>
+            <div class="row wrapper">
+              <div class="col-sm-5 m-b-xs">
+             
+              </div>
+              <div class="col-sm-4">
+              </div>
+              <div class="col-sm-3">
+                <div class="input-group">
+                  <input type="text" class="input-sm form-control" placeholder="Search" ng-model="search_context">
+                  <input id ="dbidhidden" type="text" ng-model="dbid_hidden" hidden="true">
+                  <span class="input-group-btn">
+                    <button class="btn btn-sm btn-default" ng-click="search({search:search_context})" type="button">查询</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive" ng-if="data.total_count>0">
+              <table class="table table-striped b-t b-light">
+                <thead>
+                  <tr>
+                    <th class="text-center">回路名称</th>
+                    <th class="text-center" style="width:60px;">显示</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="data in data.results">
+                    <td>{{data.lname}}</td>
+                    <td>
+                      <a ng-click="setdbid({dbid:data.dbids})" class="active text-center"><i class="icon-eye center-block"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="panel-footer">
+              <div class="row">
+                <div class="col-sm-8 text-left">
+                  <small class="text-muted inline m-t-sm m-b-sm">{{data.total_count}}条记录</small>
+                </div>
+                <div ng-if="data.page_count>1" class="col-sm-4 text-right text-center-xs">                
+                  <ul class="pagination pagination-sm m-t-none m-b-none">
+                    <li ng-class="{disabled:!data.previous}"><a ng-click="paging({page:data.page_index-1,search:search_context})"><i class="fa fa-chevron-left"></i></a></li>
+                    <li ng-repeat="page in data.pages" ng-class="{active:page==data.page_index}"><a ng-click="paging({page:page,search:search_context})">{{page}}</a></li>
+                    <li ng-class="{disabled:!data.next}"><a ng-click="paging({page:data.page_index+1,search:search_context})"><i class="fa fa-chevron-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+            </footer>
+          </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="panel-body" hidden="true">
+      <button id="forgectrl" class="btn btn-success" onclick="test_func()">Form in a modal</button>
+    </div>
+
+
+
+
+  <div class="panel panel-default" hidden="true">
+    <div class="panel-heading font-bold">
+      Form elements
+    </div>
+    <div class="panel-body">
+      <button class="btn btn-success" onclick="digui(10489)">Form in a modal</button>
+    </div>
+  </div>
