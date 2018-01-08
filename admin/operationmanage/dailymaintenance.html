@@ -1,0 +1,170 @@
+    <!-- Autodesk Forge Viewer -->
+    <link href="./admin/forge/style.min.css" rel="stylesheet" />
+    <script src="./admin/forge/three.min.js"></script>
+    <script src="./admin/forge/viewer3D.min.js"></script>
+    <style>
+        div#viewer { width: calc(100%); height: 650px; cursor: pointer; padding: 0px; margin-bottom: 20px; position: relative; overflow: hidden;
+            background-color: #eee; border: 2px dashed #aaa; border-radius: 10px; }
+    </style>
+
+    <script>
+        var docs =
+            [{"path":"./admin/forge/Resource/____/3D/3D.svf","name":"3D"}]
+        ;
+
+        var oViewer =null ;
+        $(document).ready (function () {
+            var options ={ 'docid': docs [0].path, env: 'Local' } ;
+            oViewer =new Autodesk.Viewing.Private.GuiViewer3D ($("#viewer") [0], {}) ; // With toolbar
+            Autodesk.Viewing.Initializer (options, function () {
+            oViewer.initialize () ;
+                oViewer.addEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function (event) {
+                    //oViewer.removeEventListener (Autodesk.Viewing.GEOMETRY_LOADED_EVENT, arguments.callee) ;
+                    oViewer.fitToView (true) ;
+                    setTimeout (function () { oViewer.autocam.setHomeViewFrom (oViewer.navigation.getCamera ()) ; }, 1000) ;
+                }) ;
+            oViewer.loadModel (options.docid) ;
+      }) ;
+        }) ;
+
+        function test_func1(){
+            oViewer.hide(15325);
+            oViewer.impl.visibilityManager.setNodeOff(15325, true );
+            oViewer.hide(15326);
+            oViewer.impl.visibilityManager.setNodeOff(15326, true );
+            oViewer.clearSelection();
+        } 
+
+        function digui(child1){
+            var instanceTree = oViewer.model.getInstanceTree();
+            instanceTree.enumNodeChildren(child1, function(child) {
+            
+                digui(child);
+                if(instanceTree.nodeAccess.getNumChildren(child)==0)
+                {
+                    console.log("INSERT INTO `fixedasset` (dbid, faname) VALUES ('"+child+"', '"+instanceTree.getNodeName(child)+"')");
+                }
+            }); 
+        } 
+
+        function test_func(){
+            oViewer.clearSelection();
+            var dbid111 = document.getElementById('dbidhidden').value;
+            var uniqueDbIds = new Array();
+            uniqueDbIds. push(parseInt(dbid111));
+            oViewer.hide(1);
+            oViewer.select(uniqueDbIds);
+            //oViewer.select(uniqueDbIds);
+            oViewer.fitToView(uniqueDbIds);
+            oViewer.fitToView(uniqueDbIds);
+            //oViewer.setViewCube("top");
+            //setTimeout("oViewer.clearThemingColors()",5000);
+            //oViewer.clearSelection();
+        }
+    </script>
+
+
+
+
+
+
+
+  <div class="col-sm-6">
+    <div class="panel-body">
+            <div id="viewer"></div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="wrapper-md" ng-controller="DailyMaintenanceController">
+
+
+
+
+          <div class="wrapper-md bg-light b-b">
+            <h1 class="m-n font-thin h3">设备维护历</h1>
+          </div>
+          <div class="hbox hbox-auto-xs hbox-auto-sm">
+            <div class="col wrapper-md">
+              <div class="clearfix m-b">
+                
+                <div class="pull-right">
+                  <button type="button" class="btn btn-sm btn-default" ng-click="today()">今日</button>
+                  <div class="btn-group m-l-xs">
+                    <button class="btn btn-sm btn-default" ng-click="changeView('agendaDay')">日</button>
+                    <button class="btn btn-sm btn-default" ng-click="changeView('agendaWeek')">周</button>
+                    <button class="btn btn-sm btn-default" ng-click="changeView('month')">月</button>
+                  </div>
+                </div>
+              </div>
+              <div class="pos-rlt">
+                <div class="fc-overlay">
+                  <div class="panel bg-white b-a pos-rlt">
+                    <span class="arrow"></span>
+                    <div class="h4 font-thin m-b-sm">{{event.title}}</div>
+                    <div class="line b-b b-light"></div>
+                    <div><i class="icon-calendar text-muted m-r-xs"></i> {{event.start | date:'yyyy-MM-dd'}}</div>
+                    <div class="ng-hide" ng-show='event.end'><i class="icon-clock text-muted m-r-xs"></i> {{event.end | date:'yyyy-MM-dd'}}</div>
+                    <div class="ng-hide" ng-show='event.location'><i class="icon-pointer text-muted m-r-xs"></i> {{event.location}}</div>
+                    <div class="m-t-sm">{{event.info}}</div>
+                    <div class="m-t-sm">{{event.url}}</div>
+                  </div>
+                </div>
+                <div class="calendar" ng-model="eventSources" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+              </div>
+            </div>
+            <div class="col w-md w-auto-xs bg-light dk bg-auto b-l hide" id="aside">
+              <div class="wrapper">
+                <div ng-repeat="e in events" class="bg-white-only r r-2x m-b-xs wrapper-sm {{e.className[0]}}">          
+                  <input ng-model="e.title" class="form-control m-t-n-xs no-border no-padder no-bg">
+                  <a class="pull-right text-xs text-muted" ng-click="remove($index)"><i class="fa fa-trash-o"></i></a>
+                  <div class="text-xs text-muted">{{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="panel-body" hidden="true">
+      <button id="forgectrl" class="btn btn-success" onclick="test_func()">Form in a modal</button>
+    </div>
+
+
+   <input id ="dbidhidden" type="text" ng-model="dbid_hidden" hidden="true">
+
+  <div class="panel panel-default" hidden="true">
+    <div class="panel-heading font-bold">
+      Form elements
+    </div>
+    <div class="panel-body">
+      <button class="btn btn-success" onclick="digui(2818)">Form in a modal</button>
+    </div>
+  </div>

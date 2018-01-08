@@ -170,6 +170,22 @@ app
               .state('app.operationmanage.dailymaintenance', {
                   url: '/dmlist?page&search',
                   templateUrl: 'admin/operationmanage/dailymaintenance.html',
+                  resolve: {
+                      deps: ['$ocLazyLoad', 'uiLoad',
+                        function( $ocLazyLoad, uiLoad ){
+                          return uiLoad.load(
+                            ['vendor/jquery/fullcalendar/fullcalendar.css',
+                              'vendor/jquery/fullcalendar/theme.css',
+                              'vendor/jquery/jquery-ui-1.10.3.custom.min.js',
+                              'vendor/libs/moment.min.js',
+                              'vendor/jquery/fullcalendar/fullcalendar.min.js']
+                          ).then(
+                            function(){
+                              return $ocLazyLoad.load('ui.calendar');
+                            }
+                          )
+                      }]
+                  },
                   ncyBreadcrumb: {
                     parent:'app.operationmanage.menu',
                     label: '设备日常维护',
